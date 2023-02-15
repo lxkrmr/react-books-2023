@@ -27,11 +27,15 @@ function App() {
     setBooks(books.filter((book) => book.id !== id));
   };
 
-  const editBook = (id, title) => {
+  const editBook = async (id, title) => {
+    const response = await axios.put(`http://localhost:3001/books/${id}`, {
+      title,
+    });
+
     setBooks(
       books.map((book) => {
         if (book.id === id) {
-          return { ...book, title };
+          return { ...book, ...response.data };
         }
 
         return book;
